@@ -1,0 +1,169 @@
+<div class="apidocDiv">
+<style>
+/*csslint
+*/
+.apidocDiv {
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.apidocDiv a[href] {
+    color: #33f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.apidocDiv a[href]:hover {
+    text-decoration: underline;
+}
+.apidocCodeCommentSpan {
+    background: #bbf;
+    color: #000;
+    display: block;
+}
+.apidocCodeKeywordSpan {
+    color: #d00;
+    font-weight: bold;
+}
+.apidocCodePre {
+    background: #eef;
+    border: 1px solid;
+    color: #777;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+.apidocFooterDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+.apidocModuleLi {
+    margin-top: 10px;
+}
+.apidocSectionDiv {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+.apidocSignatureSpan {
+    color: #777;
+    font-weight: bold;
+}
+</style>
+<h1>api documentation for
+    <a
+
+        href="https://github.com/commitizen/cz-conventional-changelog"
+
+    >cz-conventional-changelog (v2.0.0)</a>
+</h1>
+<h4>Commitizen adapter following the conventional-changelog format.</h4>
+<div class="apidocSectionDiv"><a
+    href="#apidoc.tableOfContents"
+    id="apidoc.tableOfContents"
+><h1>table of contents</h1></a><ol>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.cz-conventional-changelog">module cz-conventional-changelog</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.cz-conventional-changelog.prompter">
+            function <span class="apidocSignatureSpan">cz-conventional-changelog.</span>prompter
+            <span class="apidocSignatureSpan">(cz, commit)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+</ol></div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.cz-conventional-changelog" id="apidoc.module.cz-conventional-changelog">module cz-conventional-changelog</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.cz-conventional-changelog.prompter" id="apidoc.element.cz-conventional-changelog.prompter">
+        function <span class="apidocSignatureSpan">cz-conventional-changelog.</span>prompter
+        <span class="apidocSignatureSpan">(cz, commit)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">prompter = function (cz, commit) {
+  console.log(&#x27;\nLine 1 will be cropped at 100 characters. All other lines will be wrapped after 100 characters.\n&#x27;);
+
+  // Let&#x27;s ask some questions of the user
+  // so that we can populate our commit
+  // template.
+  //
+  // See inquirer.js docs for specifics.
+  // You can also opt to use another input
+  // collection library if you prefer.
+  cz.prompt([
+    {
+      type: &#x27;list&#x27;,
+      name: &#x27;type&#x27;,
+      message: &#x27;Select the type of change that you\&#x27;re committing:&#x27;,
+      choices: choices
+    }, {
+      type: &#x27;input&#x27;,
+      name: &#x27;scope&#x27;,
+      message: &#x27;Denote the scope of this change ($location, $browser, $compile, etc.):\n&#x27;
+    }, {
+      type: &#x27;input&#x27;,
+      name: &#x27;subject&#x27;,
+      message: &#x27;Write a short, imperative tense description of the change:\n&#x27;
+    }, {
+      type: &#x27;input&#x27;,
+      name: &#x27;body&#x27;,
+      message: &#x27;Provide a longer description of the change:\n&#x27;
+    }, {
+      type: &#x27;input&#x27;,
+      name: &#x27;breaking&#x27;,
+      message: &#x27;List any breaking changes:\n&#x27;
+    }, {
+      type: &#x27;input&#x27;,
+      name: &#x27;issues&#x27;,
+      message: &#x27;List any issues closed by this change:\n&#x27;
+    }
+  ]).then(function(answers) {
+
+    var maxLineWidth = 100;
+
+    var wrapOptions = {
+      trim: true,
+      newline: &#x27;\n&#x27;,
+      indent:&#x27;&#x27;,
+      width: maxLineWidth
+    };
+
+    // parentheses are only needed when a scope is present
+    var scope = answers.scope.trim();
+    scope = scope ? &#x27;(&#x27; + answers.scope.trim() + &#x27;)&#x27; : &#x27;&#x27;;
+
+    // Hard limit this line
+    var head = (answers.type + scope + &#x27;: &#x27; + answers.subject.trim()).slice(0, maxLineWidth);
+
+    // Wrap these lines at 100 characters
+    var body = wrap(answers.body, wrapOptions);
+
+    // Apply breaking change prefix, removing it if already present
+    var breaking = answers.breaking.trim();
+    breaking = breaking ? &#x27;BREAKING CHANGE: &#x27; + breaking.replace(/^BREAKING CHANGE: /, &#x27;&#x27;) : &#x27;&#x27;;
+    breaking = wrap(breaking, wrapOptions);
+
+    var issues = wrap(answers.issues, wrapOptions);
+
+    var footer = filter([ breaking, issues ]).join(&#x27;\n\n&#x27;);
+
+    commit(head + &#x27;\n\n&#x27; + body + &#x27;\n\n&#x27; + footer);
+  });
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocFooterDiv">
+    [ this document was created with
+    <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a>
+    ]
+</div>
+</div>
