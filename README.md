@@ -1,9 +1,14 @@
-# api documentation for  [cz-conventional-changelog (v2.0.0)](https://github.com/commitizen/cz-conventional-changelog)  [![npm package](https://img.shields.io/npm/v/npmdoc-cz-conventional-changelog.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-cz-conventional-changelog) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-cz-conventional-changelog.svg)](https://travis-ci.org/npmdoc/node-npmdoc-cz-conventional-changelog)
+# npmdoc-cz-conventional-changelog
+
+#### api documentation for  [cz-conventional-changelog (v2.0.0)](https://github.com/commitizen/cz-conventional-changelog)  [![npm package](https://img.shields.io/npm/v/npmdoc-cz-conventional-changelog.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-cz-conventional-changelog) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-cz-conventional-changelog.svg)](https://travis-ci.org/npmdoc/node-npmdoc-cz-conventional-changelog)
+
 #### Commitizen adapter following the conventional-changelog format.
 
-[![NPM](https://nodei.co/npm/cz-conventional-changelog.png?downloads=true)](https://www.npmjs.com/package/cz-conventional-changelog)
+[![NPM](https://nodei.co/npm/cz-conventional-changelog.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/cz-conventional-changelog)
 
-[![apidoc](https://npmdoc.github.io/node-npmdoc-cz-conventional-changelog/build/screenCapture.buildNpmdoc.browser._2Fhome_2Ftravis_2Fbuild_2Fnpmdoc_2Fnode-npmdoc-cz-conventional-changelog_2Ftmp_2Fbuild_2Fapidoc.html.png)](https://npmdoc.github.io/node-npmdoc-cz-conventional-changelog/build/apidoc.html)
+- [https://npmdoc.github.io/node-npmdoc-cz-conventional-changelog/build/apidoc.html](https://npmdoc.github.io/node-npmdoc-cz-conventional-changelog/build/apidoc.html)
+
+[![apidoc](https://npmdoc.github.io/node-npmdoc-cz-conventional-changelog/build/screenCapture.buildCi.browser.%252Ftmp%252Fbuild%252Fapidoc.html.png)](https://npmdoc.github.io/node-npmdoc-cz-conventional-changelog/build/apidoc.html)
 
 ![npmPackageListing](https://npmdoc.github.io/node-npmdoc-cz-conventional-changelog/build/screenCapture.npmPackageListing.svg)
 
@@ -17,8 +22,7 @@
 
 {
     "author": {
-        "name": "Jim Cummins",
-        "email": "jimthedev@gmail.com"
+        "name": "Jim Cummins"
     },
     "bugs": {
         "url": "https://github.com/commitizen/cz-conventional-changelog/issues"
@@ -50,21 +54,17 @@
     "main": "index.js",
     "maintainers": [
         {
-            "name": "commitizen-bot",
-            "email": "kent+commitizen-bot@doddsfamily.us"
+            "name": "commitizen-bot"
         },
         {
-            "name": "jimthedev",
-            "email": "jimthedev@gmail.com"
+            "name": "jimthedev"
         },
         {
-            "name": "kentcdodds",
-            "email": "kent@doddsfamily.us"
+            "name": "kentcdodds"
         }
     ],
     "name": "cz-conventional-changelog",
     "optionalDependencies": {},
-    "readme": "ERROR: No README data found!",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/commitizen/cz-conventional-changelog.git"
@@ -76,96 +76,6 @@
     },
     "version": "2.0.0"
 }
-```
-
-
-
-# <a name="apidoc.tableOfContents"></a>[table of contents](#apidoc.tableOfContents)
-
-#### [module cz-conventional-changelog](#apidoc.module.cz-conventional-changelog)
-1.  [function <span class="apidocSignatureSpan">cz-conventional-changelog.</span>prompter (cz, commit)](#apidoc.element.cz-conventional-changelog.prompter)
-
-
-
-# <a name="apidoc.module.cz-conventional-changelog"></a>[module cz-conventional-changelog](#apidoc.module.cz-conventional-changelog)
-
-#### <a name="apidoc.element.cz-conventional-changelog.prompter"></a>[function <span class="apidocSignatureSpan">cz-conventional-changelog.</span>prompter (cz, commit)](#apidoc.element.cz-conventional-changelog.prompter)
-- description and source-code
-```javascript
-prompter = function (cz, commit) {
-  console.log('\nLine 1 will be cropped at 100 characters. All other lines will be wrapped after 100 characters.\n');
-
-  // Let's ask some questions of the user
-  // so that we can populate our commit
-  // template.
-  //
-  // See inquirer.js docs for specifics.
-  // You can also opt to use another input
-  // collection library if you prefer.
-  cz.prompt([
-    {
-      type: 'list',
-      name: 'type',
-      message: 'Select the type of change that you\'re committing:',
-      choices: choices
-    }, {
-      type: 'input',
-      name: 'scope',
-      message: 'Denote the scope of this change ($location, $browser, $compile, etc.):\n'
-    }, {
-      type: 'input',
-      name: 'subject',
-      message: 'Write a short, imperative tense description of the change:\n'
-    }, {
-      type: 'input',
-      name: 'body',
-      message: 'Provide a longer description of the change:\n'
-    }, {
-      type: 'input',
-      name: 'breaking',
-      message: 'List any breaking changes:\n'
-    }, {
-      type: 'input',
-      name: 'issues',
-      message: 'List any issues closed by this change:\n'
-    }
-  ]).then(function(answers) {
-
-    var maxLineWidth = 100;
-
-    var wrapOptions = {
-      trim: true,
-      newline: '\n',
-      indent:'',
-      width: maxLineWidth
-    };
-
-    // parentheses are only needed when a scope is present
-    var scope = answers.scope.trim();
-    scope = scope ? '(' + answers.scope.trim() + ')' : '';
-
-    // Hard limit this line
-    var head = (answers.type + scope + ': ' + answers.subject.trim()).slice(0, maxLineWidth);
-
-    // Wrap these lines at 100 characters
-    var body = wrap(answers.body, wrapOptions);
-
-    // Apply breaking change prefix, removing it if already present
-    var breaking = answers.breaking.trim();
-    breaking = breaking ? 'BREAKING CHANGE: ' + breaking.replace(/^BREAKING CHANGE: /, '') : '';
-    breaking = wrap(breaking, wrapOptions);
-
-    var issues = wrap(answers.issues, wrapOptions);
-
-    var footer = filter([ breaking, issues ]).join('\n\n');
-
-    commit(head + '\n\n' + body + '\n\n' + footer);
-  });
-}
-```
-- example usage
-```shell
-n/a
 ```
 
 
